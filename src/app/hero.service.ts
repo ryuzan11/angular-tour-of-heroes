@@ -49,6 +49,13 @@ export class HeroService {
     );
   }
 
+  addHero (hero: Hero): Observable<Hero> {
+    return this.http.post<Hero>(this.heroesUrl, hero, this.httpOprions).pipe(
+      tap(( newHero: Hero ) => this.log(`added hero w/ id=${newHero.id}`)),
+      catchError(this.handleError<Hero>('addHero'))
+    );
+  }
+
   /**
    * 失敗したHttp操作を処理します。
    * アプリを持続させます。
